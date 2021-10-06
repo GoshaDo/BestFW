@@ -2,7 +2,7 @@ import pprint
 import requests
 from requests.structures import CaseInsensitiveDict
 from CONF import COORDS_KEY, COORDS_KEY_WEATHER
-
+from utilis import Weather
 
 class API(object):
     """
