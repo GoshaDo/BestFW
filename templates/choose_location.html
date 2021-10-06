@@ -5,11 +5,14 @@
     </head>
 
     <body>
-    <p> Please choose the right location from list</p>
-        {% for loc in loc_list %}
-            <p>{{loc}}</p>
-        {% endfor %}
-    <br>
+        <form method="POST">
+        <p> Please choose the right location from list</p>
+            {% for loc in loc_list %}
+                <p>{{loc}}</p>
+            {% endfor %}
+            <input type="submit" value="GO!">
+        <br>
+        </form>
     </body>
 
 </html>
