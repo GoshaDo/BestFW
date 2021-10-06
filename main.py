@@ -19,6 +19,7 @@ def user_input():
 def search_loc(location):
     api = API()
     location_list = api.get_loc(location)
+    location_list = enumerate(location_list)
     return render_template("choose_location.html", loc_list=location_list)
 
 
