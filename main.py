@@ -30,7 +30,7 @@ def choose_loc(location):
 
 @app.route('/weather/<location>/<option>')
 def weather_present(location, option):
-    text = f"weather in {location} {api.get_loc_list[option]}"
+    text = f"weather in {location} {api.choose_city[option]}"
     return text
 
 

@@ -50,8 +50,6 @@ class API(object):
         data_dict = resp.json()
         # pprint.pprint(data_dict["daily"][])
 
-    def get_loc_list(self):
-        return self.loc_list
 
 if __name__ == "__main__":
     api = API()
