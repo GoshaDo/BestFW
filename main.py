@@ -11,8 +11,9 @@ def index():
 
 @app.route('/', methods=['POST'])
 def user_input():
-    text = request.form['text']
+    text = request.form['user_input']
     return text
+
 
 @app.route('/<location>')
 def search_city(location):
