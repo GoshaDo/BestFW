@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for
 from api import API
 
 app = Flask(__name__)
-loc = ""
+api = API()
 
 @app.route('/')
 def index():
@@ -17,7 +17,6 @@ def user_input():
 
 @app.route('/loc/<location>')
 def search_loc(location):
-    api = API()
     location_list = api.get_loc(location)
     location_list = enumerate(location_list)
     return render_template("choose_location.html", loc_list=location_list)
@@ -25,13 +24,13 @@ def search_loc(location):
 
 @app.route('/loc/<location>', methods=['POST'])
 def choose_loc(location):
-    text = "chosen location"
-    return redirect(url_for('weather', location=location))
+    op = request.form['options']
+    return redirect(url_for('weather_present', location=location, option=op))
 
 
-@app.route('/weather/<location>')
-def weather(location):
-    text = f"weather in {location}"
+@app.route('/weather/<location>/<option>')
+def weather_present(location, option):
+    text = f"weather in {location} {api.get_loc_list[option]}"
     return text
 
 

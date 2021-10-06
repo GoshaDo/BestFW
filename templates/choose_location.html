@@ -10,7 +10,7 @@
             {% for i,loc in loc_list %}
                 <input type="radio" name="options" id={{i}} value={{i}}> {{loc[0] +" "+ loc[1] +" "+ loc[2] +" "+ loc[3]}} </input>
                 <br>
-            {% endfor %}
+            {% endfor %}{{i}}
             <input type="submit" value="GO!">
         <br>
         </form>
