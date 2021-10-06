@@ -1,11 +1,15 @@
 <!doctype html>
 <html>
-<head>
-    <title>Please choose the right location</title>
+    <head>
+        <title>Location Select</title>
     </head>
+
     <body>
-	{% for loc in locations %}
-        <p>{{loc}}</p>
-    {% endfor %}
+    <p> Please choose the right location from list</p>
+        {% for loc in loc_list %}
+            <p>{{loc}}</p>
+        {% endfor %}
+    <br>
     </body>
+
 </html>

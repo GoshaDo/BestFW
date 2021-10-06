@@ -19,7 +19,7 @@ def user_input():
 def search_loc(location):
     api = API()
     location_list = api.get_loc(location)
-    return f'location entered is: {location} , location list:{location_list}' # render a html output file
+    return render_template("choose_location.html", loc_list=location_list)
 
 
 if __name__ == '__main__':
