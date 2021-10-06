@@ -8,7 +8,8 @@
         <form method="POST">
         <p> Please choose the right location from list</p>
             {% for loc in loc_list %}
-                <p>{{loc}}</p>
+                <input type="radio" name="options" id={{loc}} value={{loc}}> {{loc}} </input>
+                <br>
             {% endfor %}
             <input type="submit" value="GO!">
         <br>
