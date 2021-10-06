@@ -16,3 +16,8 @@ def data_insertation():
 @app.route("/<city>_<country>", methods=['GET'])
 def forecast_page(city, country):
     return f"whether in {city}, {country}"
+
+
+ if __name__ == "__main__":
+     # Launch the Flask dev server
+     app.run(host="localhost", debug=True)
