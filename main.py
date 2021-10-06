@@ -9,6 +9,11 @@ def index():
     return render_template("home_page.html")
 
 
+@app.route('/', methods=['POST'])
+def user_input():
+    text = request.form['text']
+    return text
+
 @app.route('/<location>')
 def search_city(location):
     api = API()
