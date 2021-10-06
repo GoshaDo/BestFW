@@ -8,6 +8,6 @@ def main_page():
     return "Best Freaking Whether"
 
 
-@app.route("/whether_forecast")
-def forecast_page():
-    return "rainy all day"
+@app.route("/<city>_<country>")
+def forecast_page(city, country):
+    return f"whether in {city}, {country}"
