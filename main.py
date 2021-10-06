@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 from api import API
 
 app = Flask(__name__)
@@ -11,12 +11,12 @@ def index():
 
 @app.route('/', methods=['POST'])
 def user_input():
-    text = request.form['user_input']
-    return text
+    text = request.form['text']
+    return redirect(url_for('search_loc', location=text))
 
 
-@app.route('/<location>')
-def search_city(location):
+@app.route('/loc/<location>')
+def search_loc(location):
     api = API()
     location_list = api.get_loc(location)
     print(location_list)
