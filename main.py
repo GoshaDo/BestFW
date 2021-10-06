@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return '<h1>Welcome to weather app</h1>'
+    return render_template("home_page.html")
 
 
 @app.route('/<location>')
