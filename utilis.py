@@ -1,6 +1,6 @@
 
 
-class weather:
+class Weather:
     """Weather object:
     country : string
     city : string
