@@ -1,4 +1,16 @@
 
+def loc_list_to_human(loc_list):
+    """[['Jerusalem', 'US', 'RI', 'Washington County', {'lat': 41.376701, 'lng': -71.518097}]]
+    transform to [[Jerusalem,Washington County,RI,US ]]"""
+    human_loc = []
+    for loc in loc_list:
+        append_string = ""
+        append_order = [0, 3, 2, 1]
+        for i in append_order:
+            if len(loc[i]) > 0:
+                append_string += (loc[i] + " ")
+        human_loc.append(append_string)
+    return human_loc
 
 class weather:
     """Weather object:

@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 from api import API
+from utilities import loc_list_to_human
 
 app = Flask(__name__)
 api = API()
@@ -18,7 +19,7 @@ def user_input():
 @app.route('/loc/<location>')
 def search_loc(location):
     location_list = api.get_loc(location)
-    location_list = enumerate(location_list)
+    location_list = enumerate(loc_list_to_human(location_list))
     return render_template("choose_location.html", loc_list=location_list)
 
 
