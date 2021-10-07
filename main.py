@@ -53,5 +53,5 @@ def weather_present(location, option):
                            Status=status, ZippedItems=zipped)
 
 
-#if __name__ == '__main__':
-#    app.run(debug=True)
+if __name__ == '__main__':
+    app.run(debug=True)
