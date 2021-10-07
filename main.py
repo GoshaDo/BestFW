@@ -47,7 +47,6 @@ def weather_present(location, option):
     humidity = api.humidity
     status = api.status
     zipped = zip(max_temp.items(), min_temp.items(), humidity.items())
-    print(list(zipped))
     return render_template("weather_present.html",
                            Country=country, State=state, District=dist, City=city,
                            Max_Temp=max_temp, Min_Temp=min_temp, Humidity=humidity,
