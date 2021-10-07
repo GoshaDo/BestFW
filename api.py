@@ -1,5 +1,3 @@
-import pdb
-import pprint
 import requests
 from requests.structures import CaseInsensitiveDict
 from CONF import COORDS_KEY, COORDS_KEY_WEATHER
@@ -75,9 +73,9 @@ class API(object):
 
     def choose_city(self, index):
         """
-
-        :param index:
-        :return:
+        Given the chosen location by the user, get the weather data
+        :param index: the chosen location from self.loc_list
+        :return: self after data added.
         """
         if len(self.loc_list) == 0:
             raise Exception("no valid location available")
