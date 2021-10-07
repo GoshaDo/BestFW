@@ -35,12 +35,12 @@ class API(object):
         # request
         resp = requests.post(url, headers=headers, data=data)
         resp_dict = resp.json()
+
         # filtering out the important data
-        # pprint.pprint(resp_dict["results"][0])
         self.loc_list = [[loc["adminArea5"], loc["adminArea1"],
                           loc["adminArea3"], loc["adminArea4"], loc["displayLatLng"]]
                          for loc in resp_dict["results"][0]["locations"]]
-        # print(self.loc_list)
+
         return self.loc_list
 
     def choose_city(self, index):
