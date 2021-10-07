@@ -5,23 +5,27 @@ from utilities import loc_list_to_human
 app = Flask(__name__)
 api = API()
 
-
 @app.route('/')
 def index():
-    return render_template("home_page.html")
+    return render_template("home_page.html", NotFound=False)
+
+
+@app.route('/')
+def not_found():
+    return render_template("home_page.html", NotFound=True)
 
 
 @app.route('/', methods=['POST'])
 def user_input():
     text = request.form['text']
     api.__init__()
+    if not api.get_loc(text):
+        return redirect(url_for('not_found'))
     return redirect(url_for('search_loc', location=text))
 
 
 @app.route('/loc/<location>')
 def search_loc(location):
-    if not api.get_loc(location):
-        return redirect(url_for('index'))
     location_list = api.loc_list
     location_list = enumerate(loc_list_to_human(location_list))
     return render_template("choose_location.html", loc_list=location_list)
