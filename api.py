@@ -4,6 +4,7 @@ from requests.structures import CaseInsensitiveDict
 from CONF import COORDS_KEY, COORDS_KEY_WEATHER
 from utilis import Weather
 
+
 class API(object):
     """
     management class for the API functionality of the app
@@ -36,7 +37,7 @@ class API(object):
         self.loc_list = [[loc["adminArea5"], loc["adminArea1"],
                           loc["adminArea3"], loc["adminArea4"], loc["displayLatLng"]]
                          for loc in resp_dict["results"][0]["locations"]]
-        print(self.loc_list)
+        # print(self.loc_list)
         return self.loc_list
 
     def choose_city(self, index):
@@ -48,7 +49,13 @@ class API(object):
 
         resp = requests.get(url)
         data_dict = resp.json()
-        # pprint.pprint(data_dict["daily"][])
+
+        # pprint.pprint(data_dict["daily"])
+        self.max_temp = {day: data["temp"]["max"]-273.1 for day, data in enumerate(data_dict["daily"])}
+        self.min_temp = {day: data["temp"]["min"]-273.1 for day, data in enumerate(data_dict["daily"])}
+        self.humidity = {day: data["humidity"] for day, data in enumerate(data_dict["daily"])}
+        self.status = {day: data["weather"][0]["main"] for day, data in enumerate(data_dict["daily"])}
+        # print(self.max_temp)
 
 
 if __name__ == "__main__":
