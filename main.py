@@ -32,8 +32,13 @@ def choose_loc(location):
 
 @app.route('/weather/<location>/<option>')
 def weather_present(location, option):
-    text = f"weather in {location} option chosen is: {option}"
-    return text
+    option = int(option)
+    country = api.loc_list[option][1]
+    dist = api.loc_list[option][3]
+    city = api.loc_list[option][0]
+    state = api.loc_list[option][2]
+    print(">>>>>",country, dist, city, state)
+    return render_template("weather_present.html", Country=country, State=state, District=dist, City=city)
 
 
 if __name__ == '__main__':
