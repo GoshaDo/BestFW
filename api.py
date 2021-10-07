@@ -2,7 +2,7 @@ import pprint
 import requests
 from requests.structures import CaseInsensitiveDict
 from CONF import COORDS_KEY, COORDS_KEY_WEATHER
-from utilis import Weather
+# from utilis import Weather
 
 
 class API(object):
@@ -11,6 +11,10 @@ class API(object):
     """
     def __init__(self):
         self.loc_list = []
+        self.max_temp = {}
+        self.min_temp = {}
+        self.humidity = {}
+        self.status = {}
 
     def get_loc(self, location):
         """
@@ -50,12 +54,16 @@ class API(object):
         resp = requests.get(url)
         data_dict = resp.json()
 
-        # pprint.pprint(data_dict["daily"])
-        self.max_temp = {day: data["temp"]["max"]-273.1 for day, data in enumerate(data_dict["daily"])}
-        self.min_temp = {day: data["temp"]["min"]-273.1 for day, data in enumerate(data_dict["daily"])}
-        self.humidity = {day: data["humidity"] for day, data in enumerate(data_dict["daily"])}
-        self.status = {day: data["weather"][0]["main"] for day, data in enumerate(data_dict["daily"])}
-        # print(self.max_temp)
+        pprint.pprint(data_dict["daily"])
+        self.max_temp = {day: data["temp"]["max"]-273.1 for
+                         day, data in enumerate(data_dict["daily"])}
+        self.min_temp = {day: data["temp"]["min"]-273.1 for
+                         day, data in enumerate(data_dict["daily"])}
+        self.humidity = {day: data["humidity"] for
+                         day, data in enumerate(data_dict["daily"])}
+        self.status = {day: data["weather"][0]["main"] for
+                       day, data in enumerate(data_dict["daily"])}
+        return self
 
 
 if __name__ == "__main__":
