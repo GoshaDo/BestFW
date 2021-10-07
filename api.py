@@ -17,13 +17,13 @@ class API(object):
 
     def get_loc(self, location):
         """
-        get coords for the provided location
+        get coordinates for the provided location
         :param location: a string describing the searched location
         :return:
         """
         # api url
         url = "https://www.mapquestapi.com/geocoding/v1/" \
-              "address?key=%s"% COORDS_KEY
+              "address?key=%s" % COORDS_KEY
 
         # setting up headers
         headers = CaseInsensitiveDict()
@@ -59,18 +59,20 @@ class API(object):
         data_dict = resp.json()
 
         pprint.pprint(data_dict["daily"])
-        self.max_temp = {day: data["temp"]["max"]-273.1 for
+        self.max_temp = {day: round(data["temp"]["max"]-273.1, 2) for
                          day, data in enumerate(data_dict["daily"])}
-        self.min_temp = {day: data["temp"]["min"]-273.1 for
+        self.min_temp = {day: round(data["temp"]["min"]-273.1, 2) for
                          day, data in enumerate(data_dict["daily"])}
         self.humidity = {day: data["humidity"] for
                          day, data in enumerate(data_dict["daily"])}
         self.status = {day: data["weather"][0]["main"] for
                        day, data in enumerate(data_dict["daily"])}
+
         return self
 
 
 if __name__ == "__main__":
+    # basic sanity test:
     api = API()
     api.get_loc("Israel")
     api.choose_city(1)
