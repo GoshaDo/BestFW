@@ -2,7 +2,6 @@ import pprint
 import requests
 from requests.structures import CaseInsensitiveDict
 from CONF import COORDS_KEY, COORDS_KEY_WEATHER
-# from utilis import Weather
 
 
 class API(object):
@@ -45,6 +44,11 @@ class API(object):
         return self.loc_list
 
     def choose_city(self, index):
+        """
+        receive an index for the chosen location in self.loc_list
+        :param index: the index of the requested city
+        :return: this object with all the needed data in it's attributes
+        """
         lat = self.loc_list[index][4]["lat"]
         lon = self.loc_list[index][4]["lng"]
         url = "https://api.openweathermap.org/data/2.5/" \
