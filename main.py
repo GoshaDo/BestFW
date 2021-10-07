@@ -37,9 +37,9 @@ def weather_present(location, option):
     dist = api.loc_list[option][3]
     city = api.loc_list[option][0]
     state = api.loc_list[option][2]
-    max_temp = {0: 32, 1: 28, 2: 22, 3: 24, 4: 34, 5: 33, 6: 22}
-    min_temp = {0: 32, 1: 28, 2: 22, 3: 24, 4: 34, 5: 33, 6: 22}
-    humidity = {0: 99, 1: 100, 2: 98, 3: 50, 4: 99, 5: 98, 6: 97}
+    max_temp = {0: 32, 1: 28, 2: 22, 3: 24, 4: 34, 5: 33, 6: 22, 7: 22}
+    min_temp = {0: 32, 1: 28, 2: 22, 3: 24, 4: 34, 5: 33, 6: 22, 7: 22}
+    humidity = {0: 99, 1: 100, 2: 98, 3: 50, 4: 99, 5: 98, 6: 97, 7: 22}
     zipped = zip(max_temp.items(), min_temp.items(), humidity.items())
     return render_template("weather_present.html",
                            Country=country, State=state, District=dist, City=city,
