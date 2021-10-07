@@ -13,5 +13,9 @@
     <br>
     District:{{ District }}
     <br>
+    {% for (day,max_temp),(_,min_temp),(_,humidity) in ZippedItems %}
+        day{{day}} temperature in range {{max_temp}}&#8451 to {{min_temp}}&#8451, humidity {{humidity}}%;
+    <br>
+    {% endfor %}
 </body>
 </html>
