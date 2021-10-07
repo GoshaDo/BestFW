@@ -5,6 +5,7 @@ from utilities import loc_list_to_human
 app = Flask(__name__)
 api = API()
 
+
 @app.route('/')
 def index():
     return render_template("home_page.html")
