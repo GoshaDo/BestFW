@@ -19,7 +19,8 @@ def user_input():
 
 @app.route('/loc/<location>')
 def search_loc(location):
-    location_list = api.get_loc(location)
+    api.get_loc(location)  # need to check the return status coede
+    location_list = api.loc_list
     location_list = enumerate(loc_list_to_human(location_list))
     return render_template("choose_location.html", loc_list=location_list)
 
@@ -33,18 +34,20 @@ def choose_loc(location):
 @app.route('/weather/<location>/<option>')
 def weather_present(location, option):
     option = int(option)
+    api.choose_city(option)  # need to check the return status code
     country = api.loc_list[option][1]
     dist = api.loc_list[option][3]
     city = api.loc_list[option][0]
     state = api.loc_list[option][2]
-    max_temp = {0: 32, 1: 28, 2: 22, 3: 24, 4: 34, 5: 33, 6: 22, 7: 22}
-    min_temp = {0: 32, 1: 28, 2: 22, 3: 24, 4: 34, 5: 33, 6: 22, 7: 22}
-    humidity = {0: 99, 1: 100, 2: 98, 3: 50, 4: 99, 5: 98, 6: 97, 7: 22}
+    max_temp = api.max_temp
+    min_temp = api.min_temp
+    humidity = api.humidity
+    status = api.status
     zipped = zip(max_temp.items(), min_temp.items(), humidity.items())
     return render_template("weather_present.html",
                            Country=country, State=state, District=dist, City=city,
                            Max_Temp=max_temp, Min_Temp=min_temp, Humidity=humidity,
-                           ZippedItems=zipped)
+                           Status=status, ZippedItems=zipped)
 
 
 if __name__ == '__main__':
