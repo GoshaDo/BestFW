@@ -2,7 +2,6 @@ import pprint
 import requests
 from requests.structures import CaseInsensitiveDict
 from CONF import COORDS_KEY, COORDS_KEY_WEATHER
-from utilis import Weather
 
 
 class API(object):
@@ -51,11 +50,11 @@ class API(object):
         data_dict = resp.json()
 
         # pprint.pprint(data_dict["daily"])
-        self.max_temp = {day: data["temp"]["max"]-273.1 for day, data in enumerate(data_dict["daily"])}
-        self.min_temp = {day: data["temp"]["min"]-273.1 for day, data in enumerate(data_dict["daily"])}
+        self.max_temp = {day: round(data["temp"]["max"]-273.1, 2) for day, data in enumerate(data_dict["daily"])}
+        self.min_temp = {day: round(data["temp"]["min"]-273.1, 2) for day, data in enumerate(data_dict["daily"])}
         self.humidity = {day: data["humidity"] for day, data in enumerate(data_dict["daily"])}
         self.status = {day: data["weather"][0]["main"] for day, data in enumerate(data_dict["daily"])}
-        # print(self.max_temp)
+        print(self.max_temp)
 
 
 if __name__ == "__main__":
