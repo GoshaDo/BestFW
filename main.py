@@ -4,7 +4,7 @@ from utilities import loc_list_to_human
 
 app = Flask(__name__)
 api = API()
-
+app.debug = True
 
 @app.route('/')
 def index():
