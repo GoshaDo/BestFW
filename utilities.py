@@ -27,6 +27,8 @@ def loc_list_to_human(loc_list):
     for loc in loc_list:
         append_string = ""
         append_order = [0, 3, 2, 1]
+        if len(loc[1]) < 3:
+            loc[1] = rename_country(loc[1])
         if len(loc[0]) < 2:
             loc[0] = get_capital(loc[1])
         for i in append_order:

@@ -14,12 +14,14 @@ def index():
 @app.route('/', methods=['POST'])
 def user_input():
     text = request.form['text']
+    api.__init__()
     return redirect(url_for('search_loc', location=text))
 
 
 @app.route('/loc/<location>')
 def search_loc(location):
-    api.get_loc(location)  # need to check the return status coede
+    if not api.get_loc(location):
+        return redirect(url_for('index'))
     location_list = api.loc_list
     location_list = enumerate(loc_list_to_human(location_list))
     return render_template("choose_location.html", loc_list=location_list)
@@ -34,7 +36,8 @@ def choose_loc(location):
 @app.route('/weather/<location>/<option>')
 def weather_present(location, option):
     option = int(option)
-    api.choose_city(option)  # need to check the return status code
+    if not api.choose_city(option):  # need to check the return status code
+        return redirect(url_for('/'))
     country = api.loc_list[option][1]
     dist = api.loc_list[option][3]
     city = api.loc_list[option][0]
