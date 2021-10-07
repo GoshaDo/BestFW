@@ -12,6 +12,10 @@ class API(object):
     """
     def __init__(self):
         self.loc_list = []
+        self.max_temp = {}
+        self.min_temp = {}
+        self.humidity = {}
+        self.status = {}
 
     def get_loc(self, location):
         """
@@ -31,16 +35,19 @@ class API(object):
         data = '{"location": "%s","options": {"thumbMaps": true}}' % location
 
         # request
-        resp = requests.post(url, headers=headers, data=data)
+        try:
+            resp = requests.post(url, headers=headers, data=data)
+        except ConnectionError:
+            return False
 
         if resp.status_code != 200:
-            return resp.status_code
+            return False
 
         resp_dict = resp.json()
         self.filter_relevant_locations(resp_dict["results"][0]["locations"],
                                        location)
 
-        return len(self.loc_list) == 0
+        return len(self.loc_list) != 0
 
     def filter_relevant_locations(self, location_list, location):
         """
@@ -67,6 +74,11 @@ class API(object):
         return self.loc_list
 
     def choose_city(self, index):
+        """
+
+        :param index:
+        :return:
+        """
         if len(self.loc_list) == 0:
             raise Exception("no valid location available")
 
@@ -76,16 +88,28 @@ class API(object):
               "onecall?lat=%s&lon=%s&appid=" \
               "%s" % (lat, lon, COORDS_KEY_WEATHER)
 
-        resp = requests.post(url, timeout=3)
-        print(resp.status_code)
+        try:
+            resp = requests.post(url, timeout=3)
+        except ConnectionError:
+            return False
+
         if resp.status_code != 200:
             return resp.status_code
-        data_dict = resp.json()
 
-        self.max_temp = {day: round(data["temp"]["max"]-273.1, 2) for day, data in enumerate(data_dict["daily"])}
-        self.min_temp = {day: round(data["temp"]["min"]-273.1, 2) for day, data in enumerate(data_dict["daily"])}
-        self.humidity = {day: data["humidity"] for day, data in enumerate(data_dict["daily"])}
-        self.status = {day: data["weather"][0]["main"] for day, data in enumerate(data_dict["daily"])}
+        data_dict = resp.json()
+        self._process_weather_response(data_dict)
+
+        return self
+
+    def _process_weather_response(self, data_dict):
+        self.max_temp = {day: round(data["temp"]["max"] - 273.1, 2) for
+                         day, data in enumerate(data_dict["daily"])}
+        self.min_temp = {day: round(data["temp"]["min"] - 273.1, 2) for
+                         day, data in enumerate(data_dict["daily"])}
+        self.humidity = {day: data["humidity"] for
+                         day, data in enumerate(data_dict["daily"])}
+        self.status = {day: data["weather"][0]["main"] for
+                       day, data in enumerate(data_dict["daily"])}
 
 
 if __name__ == "__main__":
