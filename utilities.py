@@ -2,6 +2,7 @@ import json
 
 
 def get_capital(state):
+    """Function which return capital name of a state, if not found returns None"""
     with open('database/country_capital.json') as json_file:
         data = json.load(json_file)
         for line in data:
@@ -10,6 +11,8 @@ def get_capital(state):
 
 
 def rename_country(code):
+    """Function which returns country name out of code of the country
+    if not found returns the code"""
     with open('database/country_code.json') as json_file:
         data = json.load(json_file)
         for country in data:
@@ -17,9 +20,9 @@ def rename_country(code):
                 return country['name']
     return code
 
+
 def loc_list_to_human(loc_list):
-    """[['Jerusalem', 'US', 'RI', 'Washington County', {'lat': 41.376701, 'lng': -71.518097}]]
-    transform to [[Jerusalem,Washington County,RI,US ]]"""
+    """Function which translate API's loc_list to humans"""
     human_loc = []
     for loc in loc_list:
         append_string = ""
@@ -33,6 +36,7 @@ def loc_list_to_human(loc_list):
                 append_string += (loc[i] + " ")
         human_loc.append(append_string)
     return human_loc
+
 
 class weather:
     """Weather object:
