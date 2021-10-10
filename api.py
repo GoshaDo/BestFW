@@ -42,12 +42,12 @@ class API(object):
             return False
 
         resp_dict = resp.json()
-        self.filter_relevant_locations(resp_dict["results"][0]["locations"],
-                                       location)
+        self._filter_relevant_locations(resp_dict["results"][0]["locations"],
+                                        location)
 
         return len(self.loc_list) != 0
 
-    def filter_relevant_locations(self, location_list, location):
+    def _filter_relevant_locations(self, location_list, location):
         """
         Isolate only the relevant results that return from the api
         :param location_list: the list of returned values

@@ -51,11 +51,12 @@ def weather_present(location, option):
     humidity = api.humidity
     status = api.status
     zipped = zip(max_temp.items(), min_temp.items(), humidity.items())
-    return render_template("weather_present.html",
+    
+    return render_template("playground.html",
                            Country=country, State=state, District=dist, City=city,
                            Max_Temp=max_temp, Min_Temp=min_temp, Humidity=humidity,
                            Status=status, ZippedItems=zipped)
 
 
 if __name__ == '__main__':
-   app.run(debug=True)
+    app.run(debug=True)
