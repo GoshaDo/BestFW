@@ -40,7 +40,7 @@ def user_input():
     text = request.form['text']
     date_ = request.form['date']
     api.__init__()
-    if not (api.get_loc(text) and is_valid_date(date_)):
+    if not (api.get_loc(text) or is_valid_date(date_)):
         return redirect(url_for('not_found'))
     if len(date_) > 0:
         day, month, year = is_valid_date(date_)
