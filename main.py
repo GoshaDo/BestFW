@@ -1,7 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 from api import API
-from utilities import loc_list_to_human
-from utilities import is_valid_date
+from utilities import loc_list_to_human, sql_to_humans, is_valid_date
 import database as db
 from CONF import DB_FILE
 
@@ -9,6 +8,7 @@ from CONF import DB_FILE
 app = Flask(__name__)
 api = API()
 db.init_db(DB_FILE)
+
 
 @app.route('/')
 def index():
@@ -22,9 +22,13 @@ def not_found():
 
 @app.route('/<location>/<day>/<month>/<year>')
 def search_db(location, day, month, year):
-    sql_query = db.get_weather_from(DB_FILE, location, int(year), int(month), int(day))[-1:]
-    print(sql_query)
-    return location +" "+ day +" "+ month +" "+ year
+    sql_query = db.get_weather_from(DB_FILE, location, int(year), int(month), int(day))[-1]
+    humidity, max_temp, min_temp = sql_to_humans(sql_query)
+    zipped = zip(max_temp.items(), min_temp.items(), humidity.items())
+
+    return render_template("playground.html",
+                           Max_Temp=max_temp, Min_Temp=min_temp, Humidity=humidity,
+                           ZippedItems=zipped)
 
 
 @app.route('/', methods=['POST'])

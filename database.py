@@ -27,7 +27,6 @@ def insert_db(db_file, api):
                 query += f"{api.humidity[i]}, {api.max_temp[i]}, {api.min_temp[i]},"
             else:
                 query += f"{api.humidity[i]}, {api.max_temp[i]}, {api.min_temp[i]})"
-        print(query)
         cur.execute(query)
 
 

@@ -92,8 +92,17 @@ def get_julian_range(year, month, day):
     jul_date = get_julian_datetime(datetime.datetime(year, month, day))
     return jul_date, jul_date + 1
 
-def sql_to_humans():
-    pass
+
+def sql_to_humans(query):
+    humidty = {}
+    max_temp = {}
+    min_temp = {}
+    for i, j in zip(range(3, len(query), 3), range(int((len(query)/3)-1))):
+        humidty[j] = query[i]
+        max_temp[j] = query[i+1]
+        min_temp[j] = query[i+2]
+    return humidty, max_temp, min_temp
+
 
 if __name__ == "__main__":
     print(is_valid_date("12/12/2021"))
