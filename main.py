@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for
 from api import API
 from utilities import loc_list_to_human
+from utilities import is_valid_date
 import database as db
 from CONF import DB_FILE
 
@@ -19,12 +20,21 @@ def not_found():
     return render_template("home_page.html", NotFound=True)
 
 
+@app.route('/<location>/<day>/<month>/<year>')
+def search_db(location, day, month, year):
+    return location +" "+ day +" "+ month +" "+ year
+
+
 @app.route('/', methods=['POST'])
 def user_input():
     text = request.form['text']
+    date_ = request.form['date']
     api.__init__()
-    if not api.get_loc(text):
+    if not (api.get_loc(text) or is_valid_date(date_)):
         return redirect(url_for('not_found'))
+    day, month, year = is_valid_date(date_)
+    if len(date_) > 0:
+        return redirect(url_for('search_db', location=text, day=day, month=month, year=year))
     return redirect(url_for('search_loc', location=text))
 
 

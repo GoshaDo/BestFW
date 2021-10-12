@@ -1,5 +1,7 @@
 import json
-from datetime import date
+import datetime
+import math
+
 
 def get_capital(state):
     """Function which return capital name of a state, if not found returns None"""
@@ -38,10 +40,10 @@ def loc_list_to_human(loc_list):
     return human_loc
 
 
-def is_valid_date(input):
-    dd = input[:2]
-    mm = input[3:5]
-    yyyy = input[6:10]
+def is_valid_date(val):
+    dd = val[:2]
+    mm = val[3:5]
+    yyyy = val[6:10]
     if len(yyyy) < 4:
         return False
     try:
@@ -51,12 +53,42 @@ def is_valid_date(input):
     except ValueError:
         return False
 
-    today = date.today()
+    today = datetime.date.today()
     if not (0 <= dd <= 31 and 0 <= mm <= 12 and 2000 <= yyyy <= today.year):  # de-morgan
         return False
 
-    return True
+    return dd, mm, yyyy
+
+
+def get_julian_datetime(date):
+    """
+    Convert a datetime object into julian float.
+    Args:
+        date: datetime-object of date in question
+
+    Returns: float - Julian calculated datetime.
+    Raises:
+        TypeError : Incorrect parameter type
+        ValueError: Date out of range of equation
+    """
+
+    # Ensure correct format
+    if not isinstance(date, datetime.datetime):
+        raise TypeError('Invalid type for parameter "date" - expecting datetime')
+    elif date.year < 1801 or date.year > 2099:
+        raise ValueError('Datetime must be between year 1801 and 2099')
+
+    # Perform the calculation
+    julian_datetime = 367 * date.year - int((7 * (date.year + int((date.month + 9) / 12.0))) / 4.0) + int(
+        (275 * date.month) / 9.0) + date.day + 1721013.5 + (
+                              date.hour + date.minute / 60.0 + date.second / math.pow(60,
+                                                                                      2)) / 24.0 - 0.5 * math.copysign(
+        1, 100 * date.year + date.month - 190002.5) + 0.5
+
+    return julian_datetime
 
 
 if __name__ == "__main__":
     print(is_valid_date("12/12/2021"))
+    print(get_julian_datetime(datetime.datetime(2021, 10, 12)))
+

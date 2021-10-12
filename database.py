@@ -37,6 +37,13 @@ def show_db(db_file, table):
         print(cur.fetchall())
 
 
+def get_weather_from(db_file, day, month, year):
+    with sqlite3.connect(db_file) as con:
+        cur = con.cursor()
+        cur.execute(f"select * from Searches where ")
+        return cur.fetchall()
+
+
 if __name__ == '__main__':
     init_db('weather.db')
     show_db(DB_FILE, 'Searches')
