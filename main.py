@@ -11,20 +11,18 @@ db.init_db(DB_FILE)
 
 
 @app.route('/')
-def index():
-    return render_template("home_page.html", NotFound=False)
-
-
-@app.route('/')
-def not_found():
-    return render_template("home_page.html", NotFound=True)
+def index(not_found=False):
+    if not_found:
+        return render_template("home_page.html", NotFound=True)
+    else:
+        return render_template("home_page.html", NotFound=False)
 
 
 @app.route('/<location>/<day>/<month>/<year>')
 def search_db(location, day, month, year):
     sql_query = db.get_weather_from(DB_FILE, location, int(year), int(month), int(day))
     if len(sql_query) == 0:
-        return redirect(url_for('not_found'))
+        return redirect(url_for('index', not_found=True))
     else:
         sql_query = sql_query[-1]
     humidity, max_temp, min_temp = sql_to_humans(sql_query)
@@ -38,10 +36,12 @@ def search_db(location, day, month, year):
 @app.route('/', methods=['POST'])
 def user_input():
     text = request.form['text']
+    if len(text) == 0:
+        return redirect(url_for('index', not_found=True))
     date_ = request.form['date']
     api.__init__()
     if not (api.get_loc(text) or is_valid_date(date_)):
-        return redirect(url_for('not_found'))
+        return redirect(url_for('index', not_found=True))
     if len(date_) > 0:
         day, month, year = is_valid_date(date_)
         return redirect(url_for('search_db', location=text, day=day, month=month, year=year))
