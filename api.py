@@ -14,6 +14,8 @@ class API(object):
         self.min_temp = {}
         self.humidity = {}
         self.status = {}
+        self.location = ""
+        self.op = -1
 
     def get_loc(self, location):
         """
@@ -21,6 +23,8 @@ class API(object):
         :param location: a string describing the searched location
         :return:
         """
+        self.location = location
+
         # api url
         url = "https://www.mapquestapi.com/geocoding/v1/" \
               "address?key=%s" % COORDS_KEY
@@ -77,6 +81,7 @@ class API(object):
         :param index: the chosen location from self.loc_list
         :return: self after data added.
         """
+        self.op = index
         if len(self.loc_list) == 0:
             raise Exception("no valid location available")
 

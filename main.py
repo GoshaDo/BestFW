@@ -1,9 +1,13 @@
 from flask import Flask, render_template, request, redirect, url_for
 from api import API
 from utilities import loc_list_to_human
+import database as db
+from CONF import DB_FILE
+
 
 app = Flask(__name__)
 api = API()
+db.init_db(DB_FILE)
 
 @app.route('/')
 def index():
@@ -51,7 +55,9 @@ def weather_present(location, option):
     humidity = api.humidity
     status = api.status
     zipped = zip(max_temp.items(), min_temp.items(), humidity.items())
-    
+
+    db.insert_db(DB_FILE, api)
+
     return render_template("playground.html",
                            Country=country, State=state, District=dist, City=city,
                            Max_Temp=max_temp, Min_Temp=min_temp, Humidity=humidity,
