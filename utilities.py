@@ -1,5 +1,5 @@
 import json
-
+from datetime import date
 
 def get_capital(state):
     """Function which return capital name of a state, if not found returns None"""
@@ -37,3 +37,26 @@ def loc_list_to_human(loc_list):
         human_loc.append(append_string)
     return human_loc
 
+
+def is_valid_date(input):
+    dd = input[:2]
+    mm = input[3:5]
+    yyyy = input[6:10]
+    if len(yyyy) < 4:
+        return False
+    try:
+        dd = int(dd)
+        mm = int(mm)
+        yyyy = int(yyyy)
+    except ValueError:
+        return False
+
+    today = date.today()
+    if not (0 <= dd <= 31 and 0 <= mm <= 12 and 2000 <= yyyy <= today.year):  # de-morgan
+        return False
+
+    return True
+
+
+if __name__ == "__main__":
+    print(is_valid_date("12/12/2021"))
