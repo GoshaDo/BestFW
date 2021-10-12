@@ -88,7 +88,14 @@ def get_julian_datetime(date):
     return julian_datetime
 
 
+def get_julian_range(year, month, day):
+    jul_date = get_julian_datetime(datetime.datetime(year, month, day))
+    return jul_date, jul_date + 1
+
+def sql_to_humans():
+    pass
+
 if __name__ == "__main__":
     print(is_valid_date("12/12/2021"))
-    print(get_julian_datetime(datetime.datetime(2021, 10, 12)))
+    print(get_julian_range(2021, 10, 12))
 

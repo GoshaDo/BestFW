@@ -22,6 +22,8 @@ def not_found():
 
 @app.route('/<location>/<day>/<month>/<year>')
 def search_db(location, day, month, year):
+    sql_query = db.get_weather_from(DB_FILE, location, int(year), int(month), int(day))[-1:]
+    print(sql_query)
     return location +" "+ day +" "+ month +" "+ year
 
 
@@ -32,8 +34,8 @@ def user_input():
     api.__init__()
     if not (api.get_loc(text) or is_valid_date(date_)):
         return redirect(url_for('not_found'))
-    day, month, year = is_valid_date(date_)
     if len(date_) > 0:
+        day, month, year = is_valid_date(date_)
         return redirect(url_for('search_db', location=text, day=day, month=month, year=year))
     return redirect(url_for('search_loc', location=text))
 

@@ -1,5 +1,6 @@
 import sqlite3
 from CONF import DB_FILE
+from utilities import get_julian_range
 
 
 def init_db(db_file):
@@ -37,13 +38,17 @@ def show_db(db_file, table):
         print(cur.fetchall())
 
 
-def get_weather_from(db_file, day, month, year):
+def get_weather_from(db_file, location, year, month, day):
     with sqlite3.connect(db_file) as con:
         cur = con.cursor()
-        cur.execute(f"select * from Searches where ")
+        low_jul, high_jul = get_julian_range(year, month, day)
+        location = location.lower()
+        cur.execute(f"select * from Searches where (DATE BETWEEN {low_jul} AND {high_jul}) AND SEARCH = \'{location}\'")
         return cur.fetchall()
 
 
 if __name__ == '__main__':
     init_db('weather.db')
     show_db(DB_FILE, 'Searches')
+    print("---------------")
+    print(get_weather_from(DB_FILE,'haifa',2021,10,12)[-1:])
