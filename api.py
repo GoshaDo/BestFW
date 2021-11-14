@@ -38,7 +38,7 @@ class API(object):
 
         # request
         try:
-            resp = requests.post(url, headers=headers, data=data)
+            resp = requests.post(url, headers=headers, data=data.encode('utf-8'))
         except ConnectionError:
             return False
 
