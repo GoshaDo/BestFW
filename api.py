@@ -117,6 +117,3 @@ class API(object):
 
 if __name__ == "__main__":
     api = API()
-    a = api.get_loc("israel")
-    print(api.loc_list)
-    api.choose_city(0)
