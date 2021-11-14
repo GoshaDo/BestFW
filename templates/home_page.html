@@ -42,9 +42,9 @@
                 <div class="bg-text">
                     <h1 style="font-size:50px">Welcome to BestFWeather</h1>
             <center><p>We hope you will have a nice FWeather today.</p></center>
-            {% if NotFound == True%}
-                <center><p>NOT FOUND!</p></center>
-            {% endif %}
+
+                <center><p>{{ msg }}</p></center>
+
             <center>
             <form method="POST">
                 Enter city or country name:

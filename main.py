@@ -11,18 +11,15 @@ db.init_db(DB_FILE)
 
 
 @app.route('/')
-def index(not_found=False):
-    if not_found:
-        return render_template("home_page.html", NotFound=True)
-    else:
-        return render_template("home_page.html", NotFound=False)
+def index():
+        return render_template("home_page.html")
 
 
 @app.route('/<location>/<day>/<month>/<year>')
 def search_db(location, day, month, year):
     sql_query = db.get_weather_from(DB_FILE, location, int(year), int(month), int(day))
     if len(sql_query) == 0:
-        return redirect(url_for('index', not_found=True))
+        return redirect(url_for('index', msg=f"{location} Not Found!"))
     else:
         sql_query = sql_query[-1]
     humidity, max_temp, min_temp = sql_to_humans(sql_query)
@@ -33,15 +30,15 @@ def search_db(location, day, month, year):
                            ZippedItems=zipped)
 
 
-@app.route('/', methods=['POST'])
+@app.route('/', methods=['POST', 'GET'])
 def user_input():
     text = request.form['text']
     if len(text) == 0:
-        return redirect(url_for('index', not_found=True))
+        return render_template("home_page.html", msg=f"{text} Not Found!")
     date_ = request.form['date']
     api.__init__()
     if not (api.get_loc(text) or is_valid_date(date_)):
-        return redirect(url_for('index', not_found=True))
+        return render_template("home_page.html", msg=f"{text} Not Found!")
     if len(date_) > 0:
         day, month, year = is_valid_date(date_)
         return redirect(url_for('search_db', location=text, day=day, month=month, year=year))
@@ -85,4 +82,4 @@ def weather_present(location, option):
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=8000, debug=True)
