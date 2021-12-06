@@ -1,0 +1,12 @@
+[webservers]
+# Add hosts here
+#xxx.xxx.xx.xxx
+10.1.0.124
+
+
+[webservers:vars]
+# Local variables for Ansible playbooks
+ansible_user=devops
+ansible_ssh_pass=0507673023
+github_user=omri.ezra
+app_name=BestFw  # aligned with github repo name
