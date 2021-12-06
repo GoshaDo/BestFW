@@ -4,8 +4,8 @@ After=network.target
 [Service]
 User=devops
 WorkingDirectory=/home/devops/BestFW
-Environment="PATH=/home/devops/BestFW/env/bin"
-ExecStart=/home/devops/BestFW/env/bin/gunicorn -b localhost:8000 main:app
+Environment="PATH=/home/devops/BestFW/venv/bin"
+ExecStart=/home/devops/BestFW/venv/bin/gunicorn -b localhost:8000 main:app
 Restart=always
 [Install]
 WantedBy=multi-user.target
