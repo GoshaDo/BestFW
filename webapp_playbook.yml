@@ -6,19 +6,15 @@
   become: yes
   become_method: sudo
   tasks:
-
-    - name: update 
-      apt: update_cache=yes
-    - name: install packages
-    apt: name={{item}} state=installed
+  - name: update 
+    apt: update_cache=yes
+  - name: install packages
+    apt: name={{item}} state=present
     with_items:
-      - tree         # Optional
-      - python-pip   # Optional
-      - python3   # Optional
+      - python3
       - python3-pip
       - python3-venv
-      - requests
-      - flask
+      - gunicorn
       - nginx
 
 # Install the app, note: don't do these tasks with become sudo
@@ -33,7 +29,7 @@
     pip:
       requirements: /home/{{ ansible_ssh_user }}/{{ app_name }}/requirements.txt
       virtualenv: /home/{{ ansible_ssh_user }}/{{ app_name }}/env
-      virtualenv_python: python3.8
+      virtualenv_python: python3
 
 # Configure app systemd service and nginx
 - hosts: webservers
