@@ -3,7 +3,7 @@ Description=Gunicorn instance to serve BestFW
 After=network.target
 [Service]
 User=devops
-WorkingDirectory=/home/devops/{BestFW
+WorkingDirectory=/home/devops/BestFW
 Environment="PATH=/home/devops/BestFW/env/bin"
 ExecStart=/home/devops/BestFW/env/bin/gunicorn -b localhost:8000 main:app
 Restart=always
