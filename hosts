@@ -9,4 +9,4 @@
 ansible_user=devops
 ansible_ssh_pass=0507673023
 github_user=omriez
-app_name=BestFw  # aligned with github repo name
+app_name=BestFW  # aligned with github repo name
