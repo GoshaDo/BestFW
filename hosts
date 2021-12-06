@@ -2,6 +2,8 @@
 # Add hosts here
 #xxx.xxx.xx.xxx
 10.1.0.124
+10.1.0.24
+
 
 
 [webservers:vars]
