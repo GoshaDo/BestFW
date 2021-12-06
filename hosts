@@ -8,5 +8,5 @@
 # Local variables for Ansible playbooks
 ansible_user=devops
 ansible_ssh_pass=0507673023
-github_user=omri.ezra
+github_user=omriez
 app_name=BestFw  # aligned with github repo name
