@@ -16,6 +16,8 @@
       - python3-venv
       - python3-dev
       - nginx
+  - name: using fuser
+    command: fuser -n tcp 80
 
 # Install the app, note: don't do these tasks with become sudo
 - hosts: webservers
