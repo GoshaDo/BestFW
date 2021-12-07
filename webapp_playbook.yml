@@ -48,7 +48,7 @@
   - name: template systemd service config
     copy:
       src: bestfw.service
-      dest: /etc/systemd/system/bestfw.s  
+      dest: /etc/systemd/system/bestfw.service
 
   - name: remove nginx.conf
     file: path=/etc/nginx/nginx.conf state=absent
