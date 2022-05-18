@@ -3,7 +3,8 @@ from api import API
 from utilities import loc_list_to_human, sql_to_humans, is_valid_date
 import database as db
 from CONF import DB_FILE
-
+import rook
+import os
 
 app = Flask(__name__)
 api = API()
@@ -82,4 +83,8 @@ def weather_present(location, option):
 
 
 if __name__ == '__main__':
+    RO_TOKEN = os.environ.get("RO_TOKEN")
+    if ( RO_TOKEN == "null" or not RO_TOKEN ):
+        raise Exception("Rookout token missing")
+    rook.start(token=RO_TOKEN, labels={"env":"flask-app"})
     app.run(host='0.0.0.0', port=8000, debug=True)
