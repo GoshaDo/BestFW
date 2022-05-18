@@ -1,3 +1,5 @@
-Flask==0.12.2
+Jinja2==3.1.1
+Flask==2.0.3
 gunicorn==19.7.1
 requests==2.26.0
+rook
