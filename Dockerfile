@@ -18,4 +18,4 @@ COPY database/ ./database
 COPY templates/ ./templates
 COPY static/ ./static
 
-CMD ["python", "/app/main.py"]
+ENTRYPOINT ["python", "/app/main.py"]
