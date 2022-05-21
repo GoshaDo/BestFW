@@ -83,8 +83,5 @@ def weather_present(location, option):
 
 
 if __name__ == '__main__':
-    RO_TOKEN = os.environ.get("RO_TOKEN")
-    if ( RO_TOKEN == "null" or not RO_TOKEN ):
-        raise Exception("Rookout token missing")
-    rook.start(token=RO_TOKEN, labels={"env":"flask-app"}, debug=True)
+    rook.start(labels={"env":"flask-app"}, debug=True)
     app.run(host='0.0.0.0', port=8000, debug=True)
