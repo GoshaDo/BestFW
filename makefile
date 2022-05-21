@@ -6,4 +6,3 @@ push:
 	docker push goshad/webapp-nginx:v${NEW_VERSION}
 
 build-and-push: build push
-
